@@ -73,6 +73,66 @@ regions = {
                 else return 0 end
             end
     },
+    ["symmetryOuter"] = {
+        value = 0,
+        connections =
+            function() 
+                if (Tracker:ProviderCountForCode("DoorsNo")>0 and canSolve("158040") and canSolve("158036-158038") and regions["glassFactory"].value == 2) or
+                (isNotDoors() and Tracker:ProviderCountForCode("Door to Symmetry Island Lower (Panel)")>0 and canSolve("158040")) or
+                (Tracker:ProviderCountForCode("Symmetry Island Lower Door")>0) then return regions["overworld"].value
+                elseif (Tracker:ProviderCountForCode("DoorsNo")>0 and canSolve("158040") and canSolve("158036-158038") and regions["overworld"].value > 0) then return 1
+                else return 0 end
+            end
+    },
+    ["symmetryInner"] = {
+        value = 0,
+        connections =
+            function() 
+                if (isNotDoors() and isNotPanelsOnlyOrHasPanel("Door to Symmetry Island Lower (Panel)") and canSolve("158041-158058") and canSolve("158064")) or
+                (Tracker:ProviderCountForCode("Symmetry Island Upper Door")>0) then return regions["symmetryOuter"].value
+                else return 0 end
+            end
+    },
+    ["desertFloodLight"] = {
+        value = 0,
+        connections =
+            function() 
+                if (isNotDoors() and hasPanel("Desert Light Room Entry (Panel)")) or
+                (Tracker:ProviderCountForCode("Desert Door to Light Room")>0) then return regions["overworld"].value
+                elseif (Tracker:ProviderCountForCode("Desert Door to Pond Room")>0) then return regions["desertPond"].value
+                else return 0 end
+            end
+    },
+    ["desertPond"] = {
+        value = 0,
+        connections =
+            function() 
+                if (isNotDoors() and hasPanel("Desert Light Room Light Control (Panel)")) or
+                (Tracker:ProviderCountForCode("Desert Door to Pond Room")>0) then return regions["desertFloodLight"].value
+                elseif (Tracker:ProviderCountForCode("Desert Door to Flood Room")>0) then return regions["desertFlood"].value
+                else return 0 end
+            end
+    },
+    ["desertFlood"] = {
+        value = 0,
+        connections =
+            function() 
+                if (isNotDoors() and hasPanel("Desert Flood Room Entry (Panel)")) or
+                (Tracker:ProviderCountForCode("Desert Door to Flood Room")>0) then return regions["desertPond"].value
+                elseif (Tracker:ProviderCountForCode("Desert Door to Elevator Room")>0) then return regions["desertLaser"].value
+                else return 0 end
+            end
+    },
+    ["desertLaser"] = {
+        value = 0,
+        connections =
+            function() 
+                if (isNotDoors() and hasPanel("Desert Flood Room Flood Controls (Panel)")) or
+                (Tracker:ProviderCountForCode("Desert Door to Elevator Room")>0) then return regions["desertFlood"].value
+                else return 0 end  --finish writing this one when you figure out your other problem
+            end
+    },
+
 }
 
 regions[startLocation].value = 2
@@ -97,8 +157,9 @@ end
 function sweep()
     local madeChanges = false
 
+    print(Tracker:FindObjectForCode("@Symmetry Island/asdasd Entry Panel"), "PLACE")
+
     for place, v in pairs(regions) do
-        print(place, v.value)
         local newValue = v.connections()
         if v.value ~= newValue then
             v.value = newValue
