@@ -4,8 +4,8 @@
 		"map_locations": [
 			{
 				"map": "fullmap",
-				"x": 200,
-				"y": 200
+				"x": 20,
+				"y": 20
 			}],
 		"sections": [
 			{
@@ -22,17 +22,17 @@
 			},
 			{
 				"name": "Back Left",
-				"access_rules": [ "@Places/tutorial, $canSolve|158005" ]
+				"access_rules": [ "$region|tutorial|1, [$region|tutorial|2], $canSolve|158005" ]
 			},
 			{
 				"name": "Back Right",
-				"access_rules": [ "@Places/tutorial, $canSolve|158006" ]
+				"access_rules": [ "$region|tutorial|1, [$region|tutorial|2], $canSolve|158006" ]
 			},
 			{
 				"name": "Gate Open",
 				"access_rules": [
-					"$isNotExpert, @Places/tutorial, $canSolve|158002-158007",
-					"Expert, @Places/tutorial, $canSolve|158002 158003 158004 158007"
+					"$isNotExpert, $region|tutorial|1, [$region|tutorial|2], $canSolve|158002-158007",
+					"Expert, $region|tutorial|1, [$region|tutorial|2], $canSolve|158002 158003 158004 158007"
 				]
 			},
 			{
@@ -40,8 +40,8 @@
 				"visibility_rules": [ "eps, $isNotDisabled|210223" ],
 				"access_rules": [
 					"$isDisabled|210223",
-					"@Tutorial Gate/Gate Open, @Places/tunnels",
-					"showSnipes, @Tutorial Gate/Gate Open, [@Places/tunnels]"
+					"@Tutorial Gate/Gate Open, $region|tunnels|1, [$region|tunnels|2]",
+					"showSnipes, @Tutorial Gate/Gate Open, [$region|tunnels|2]"
 				]
 			}
 		],
@@ -79,24 +79,24 @@
 			{
 				"name": "First Hallway Straight",
 				"visibility_rules": [ "Tutorial 1 Extra" ],
-				"access_rules": [ "@Places/tutorial" ]
+				"access_rules": [ "$region|tutorial|1, [$region|tutorial|2]" ]
 			},
 			{
 				"name": "First Hallway Bent",
 				"visibility_rules": [ "Tutorial 2 Extra" ],
-				"access_rules": [ "@Places/tutorial" ]
+				"access_rules": [ "$region|tutorial|1, [$region|tutorial|2]" ]
 			},
 			{
 				"name": "Patio Floor",
 				"visibility_rules": [ "Unrandomized" ],
-				"access_rules": [ "$canSolve|158009 158010, @Places/tutorial" ]
+				"access_rules": [ "$canSolve|158009 158010, $region|tutorial|1, [$region|tutorial|2]" ]
 			},
 			{
 				"name": "First Hallway EP",
 				"visibility_rules": [ "eps, $isNotDisabled|6216" ],
 				"access_rules": [
 					"$isDisabled|6216",
-					"@Places/tutorial"
+					"$region|tutorial|1, [$region|tutorial|2]"
 				]
 			},
 			{
@@ -104,7 +104,7 @@
 				"visibility_rules": [ "eps, $isNotDisabled|210432" ],
 				"access_rules": [
 					"$isDisabled|210432",
-					"@Places/tutorial, $canSolve|158009-158010"
+					"$region|tutorial|1, [$region|tutorial|2], $canSolve|158009-158010"
 				]
 			},
 			{
